@@ -10,7 +10,12 @@ spring:
     url: jdbc:postgresql://localhost:5481/car_repair_db
     username: car_repair_user
     password: car_repair_pass
-  jpa:`n    hibernate:`n      ddl-auto: validate`n    open-in-view: false`n  flyway:`n    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
   security:
     oauth2:
       resourceserver:
@@ -38,6 +43,7 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
+
 
 
 

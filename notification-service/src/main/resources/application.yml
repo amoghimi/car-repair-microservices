@@ -10,7 +10,12 @@ spring:
     url: jdbc:postgresql://localhost:5486/notification_db
     username: notification_svc
     password: notification_pass
-  jpa:`n    hibernate:`n      ddl-auto: validate`n    open-in-view: false`n  flyway:`n    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
   security:
     oauth2:
       resourceserver:
@@ -41,5 +46,6 @@ management:
 
 app:
   notification-topic: notifications
+
 
 
