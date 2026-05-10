@@ -31,7 +31,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
     Converter<Jwt, ? extends AbstractAuthenticationToken> keycloakJwtAuthConverter() {
         return jwt -> new JwtAuthenticationToken(jwt, extractRoles(jwt));
     }

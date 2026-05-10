@@ -1,4 +1,0 @@
-CREATE TABLE IF NOT EXISTS repairs (
-    id BIGSERIAL PRIMARY KEY,
-    customer_name VARCHAR(255) NOT NULL, car_model VARCHAR(255) NOT NULL, issue_description VARCHAR(1000) NOT NULL, status VARCHAR(64) NOT NULL
-);

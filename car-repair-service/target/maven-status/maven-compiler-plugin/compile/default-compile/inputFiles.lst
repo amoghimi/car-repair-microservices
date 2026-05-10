@@ -1,8 +1,0 @@
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\CarrepairserviceApplication.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\config\SecurityConfig.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\controller\CarRepairController.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\dto\RepairRequest.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\dto\RepairResponse.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\model\Repair.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\repository\RepairRepository.java
-D:\IntelliJ IDEA\car-repair-microservices\car-repair-service\src\main\java\com\carrepair\carrepairservice\service\RepairService.java

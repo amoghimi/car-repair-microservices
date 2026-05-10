@@ -104,6 +104,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user_db
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080
     ports: ["8082:8082"]
 
   parts-service:

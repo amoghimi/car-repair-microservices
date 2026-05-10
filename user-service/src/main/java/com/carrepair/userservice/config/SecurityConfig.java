@@ -20,13 +20,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**", "/users/register", "/users/login").permitAll()
+                        .requestMatchers("/actuator/**", "/users/register", "/users/login", "/register", "/login").permitAll()
                         .anyRequest().hasRole("ADMIN"))
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(keycloakJwtAuthConverter())));
         return http.build();
     }
 
-    @Bean
     Converter<Jwt, ? extends AbstractAuthenticationToken> keycloakJwtAuthConverter() {
         return jwt -> new JwtAuthenticationToken(jwt, extractRoles(jwt));
     }

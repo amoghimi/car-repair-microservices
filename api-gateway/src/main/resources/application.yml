@@ -21,26 +21,18 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/users/**
-          filters:
-            - RewritePath=/users/(?<segment>.*), /${segment}
         - id: parts-route
           uri: lb://parts-service
           predicates:
             - Path=/parts/**
-          filters:
-            - RewritePath=/parts/(?<segment>.*), /${segment}
         - id: appointment-route
-          uri: lb://appointment-service
+          uri: http://appointment-service:8084
           predicates:
             - Path=/appointments/**
-          filters:
-            - RewritePath=/appointments/(?<segment>.*), /${segment}
         - id: payment-route
           uri: lb://payment-service
           predicates:
             - Path=/payments/**
-          filters:
-            - RewritePath=/payments/(?<segment>.*), /${segment}
 
   security:
     oauth2:

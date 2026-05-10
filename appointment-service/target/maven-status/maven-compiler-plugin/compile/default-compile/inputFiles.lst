@@ -1,7 +1,0 @@
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\AppointmentserviceApplication.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\config\SecurityConfig.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\controller\AppointmentController.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\dto\AppointmentRequest.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\model\Appointment.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\repository\AppointmentRepository.java
-D:\IntelliJ IDEA\car-repair-microservices\appointment-service\src\main\java\com\carrepair\appointmentservice\service\AppointmentService.java

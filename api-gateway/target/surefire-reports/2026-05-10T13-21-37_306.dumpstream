@@ -1,5 +1,0 @@
-# Created at 2026-05-10T13:21:39.082
-Boot Manifest-JAR contains absolute paths in classpath 'D:\IntelliJ IDEA\car-repair-microservices\api-gateway\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-

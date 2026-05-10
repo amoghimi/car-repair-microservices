@@ -1,8 +1,0 @@
-com\carrepair\carrepairservice\dto\RepairRequest.class
-com\carrepair\carrepairservice\dto\RepairResponse.class
-com\carrepair\carrepairservice\config\SecurityConfig.class
-com\carrepair\carrepairservice\service\RepairService.class
-com\carrepair\carrepairservice\CarrepairserviceApplication.class
-com\carrepair\carrepairservice\model\Repair.class
-com\carrepair\carrepairservice\controller\CarRepairController.class
-com\carrepair\carrepairservice\repository\RepairRepository.class

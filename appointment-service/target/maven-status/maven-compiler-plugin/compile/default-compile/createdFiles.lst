@@ -1,7 +1,0 @@
-com\carrepair\appointmentservice\controller\AppointmentController.class
-com\carrepair\appointmentservice\service\AppointmentService.class
-com\carrepair\appointmentservice\config\SecurityConfig.class
-com\carrepair\appointmentservice\repository\AppointmentRepository.class
-com\carrepair\appointmentservice\dto\AppointmentRequest.class
-com\carrepair\appointmentservice\model\Appointment.class
-com\carrepair\appointmentservice\AppointmentserviceApplication.class
