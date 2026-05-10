@@ -6,6 +6,11 @@ spring:
     name: payment-service
   config:
     import: optional:configserver:http://localhost:8888
+  datasource:
+    url: jdbc:postgresql://localhost:5485/payment_db
+    username: payment_svc
+    password: payment_pass
+  jpa:`n    hibernate:`n      ddl-auto: validate`n    open-in-view: false`n  flyway:`n    enabled: true
   security:
     oauth2:
       resourceserver:
@@ -33,5 +38,6 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
+
 
 

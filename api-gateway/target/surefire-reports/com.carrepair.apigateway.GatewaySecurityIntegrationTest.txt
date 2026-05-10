@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.carrepair.apigateway.GatewaySecurityIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.35 s -- in com.carrepair.apigateway.GatewaySecurityIntegrationTest

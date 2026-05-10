@@ -1,7 +1,9 @@
 com\carrepair\userservice\service\UserService.class
+com\carrepair\userservice\config\KeycloakAdminConfig.class
 com\carrepair\userservice\repository\UserRepository.class
 com\carrepair\userservice\model\UserEntity.class
 com\carrepair\userservice\UserserviceApplication.class
 com\carrepair\userservice\controller\UserController.class
 com\carrepair\userservice\dto\UserRegistrationRequest.class
+com\carrepair\userservice\integration\KeycloakUserProvisioningClient.class
 com\carrepair\userservice\config\SecurityConfig.class
