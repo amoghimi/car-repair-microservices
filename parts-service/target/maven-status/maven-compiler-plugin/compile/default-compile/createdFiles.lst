@@ -1,0 +1,7 @@
+com\carrepair\partsservice\model\Part.class
+com\carrepair\partsservice\PartsserviceApplication.class
+com\carrepair\partsservice\controller\PartsController.class
+com\carrepair\partsservice\dto\BuyPartRequest.class
+com\carrepair\partsservice\config\SecurityConfig.class
+com\carrepair\partsservice\service\PartsService.class
+com\carrepair\partsservice\repository\PartRepository.class

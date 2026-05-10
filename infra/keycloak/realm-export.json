@@ -1,0 +1,13 @@
+{
+  "realm": "car-repair",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "car-repair-gateway",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": ["*"]
+    }
+  ]
+}

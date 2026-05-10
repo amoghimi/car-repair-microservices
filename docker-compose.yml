@@ -1,0 +1,159 @@
+version: '3.9'
+services:
+  zipkin:
+    image: openzipkin/zipkin:3
+    ports:
+      - "9411:9411"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    depends_on: [zookeeper]
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  keycloak-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    command: ["start-dev", "--import-realm"]
+    depends_on: [keycloak-db]
+    ports:
+      - "8180:8080"
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./infra/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+
+  eureka-server:
+    build: ./eureka-server
+    ports: ["8761:8761"]
+
+  config-server:
+    build: ./config-server
+    depends_on: [eureka-server]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    ports: ["8888:8888"]
+
+  car-repair-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: car_repair_db, POSTGRES_USER: car_repair_user, POSTGRES_PASSWORD: car_repair_pass }
+    ports: ["5411:5432"]
+  user-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: user_db, POSTGRES_USER: user_svc, POSTGRES_PASSWORD: user_pass }
+    ports: ["5412:5432"]
+  parts-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: parts_db, POSTGRES_USER: parts_svc, POSTGRES_PASSWORD: parts_pass }
+    ports: ["5413:5432"]
+  appointment-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: appointment_db, POSTGRES_USER: appointment_svc, POSTGRES_PASSWORD: appointment_pass }
+    ports: ["5414:5432"]
+  payment-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: payment_db, POSTGRES_USER: payment_svc, POSTGRES_PASSWORD: payment_pass }
+    ports: ["5415:5432"]
+  notification-db:
+    image: postgres:16
+    environment: { POSTGRES_DB: notification_db, POSTGRES_USER: notification_svc, POSTGRES_PASSWORD: notification_pass }
+    ports: ["5416:5432"]
+
+  car-repair-service:
+    build: ./car-repair-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, car-repair-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://car-repair-db:5432/car_repair_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8081:8081"]
+
+  user-service:
+    build: ./user-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, user-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8082:8082"]
+
+  parts-service:
+    build: ./parts-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, parts-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://parts-db:5432/parts_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8083:8083"]
+
+  appointment-service:
+    build: ./appointment-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, appointment-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://appointment-db:5432/appointment_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8084:8084"]
+
+  payment-service:
+    build: ./payment-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, payment-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-db:5432/payment_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8085:8085"]
+
+  notification-service:
+    build: ./notification-service
+    depends_on: [eureka-server, config-server, kafka, zipkin, keycloak, notification-db]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      SPRING_DATASOURCE_URL: jdbc:postgresql://notification-db:5432/notification_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8086:8086"]
+
+  api-gateway:
+    build: ./api-gateway
+    depends_on: [eureka-server, config-server, keycloak]
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/car-repair
+    ports: ["8080:8080"]

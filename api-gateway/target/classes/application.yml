@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: car-repair-route
+          uri: lb://car-repair-service
+          predicates:
+            - Path=/car-repair/**
+          filters:
+            - RewritePath=/car-repair/(?<segment>.*), /${segment}
+        - id: user-route
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<segment>.*), /${segment}
+        - id: parts-route
+          uri: lb://parts-service
+          predicates:
+            - Path=/parts/**
+          filters:
+            - RewritePath=/parts/(?<segment>.*), /${segment}
+        - id: appointment-route
+          uri: lb://appointment-service
+          predicates:
+            - Path=/appointments/**
+          filters:
+            - RewritePath=/appointments/(?<segment>.*), /${segment}
+        - id: payment-route
+          uri: lb://payment-service
+          predicates:
+            - Path=/payments/**
+          filters:
+            - RewritePath=/payments/(?<segment>.*), /${segment}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/car-repair
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
